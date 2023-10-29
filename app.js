@@ -1,10 +1,15 @@
 const express = require("express")
 const app = express()
 
+//database connection
+require("./model/index")
+
+//telling the nodejs to set view engine to ejs
 app.set("view engine", "ejs")
 
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
+//form bata aairako data lai parse garna ya handle garna 
+ app.use(express.json())
+ app.use(express.urlencoded({extended:true}))
 
 app.get('/', (req,res)=>{
     //res.send("home page")
