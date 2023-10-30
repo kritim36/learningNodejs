@@ -1,4 +1,5 @@
 const express = require("express")
+const { blogs } = require("./model/index")
 const app = express()
 
 //database connection
@@ -20,8 +21,24 @@ app.get("/createBlog", (req,res)=>{
     res.render("createBlog")
 })
 
-app.post("/createBlog", (req,res)=>{
-    console.log(req.body)
+app.post("/createBlog",async (req,res)=>{
+    //second approach
+    //const {title, subTitle, description} = req.body
+
+    //first approach
+    const title = req.body.title
+    const subTitle = req.body.subtitle
+    const description = req.body.description
+    
+    //console.log(title, subTitle, description)
+
+    //database ma data halna paryo, database snga kei operation garda await rakhne
+    await blogs.create({
+        title : title,
+        subTitle : subTitle,
+        description : description
+    })
+
     res.send("form submitted successfully")
 })
 
