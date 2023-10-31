@@ -12,17 +12,23 @@ app.set("view engine", "ejs")
  app.use(express.json())
  app.use(express.urlencoded({extended:true}))
 
-app.get('/', (req,res)=>{
+ //allblogs
+app.get('/', async(req,res)=>{
     //res.send("home page")
-    res.render('blogs')
+    //blogs vanne table bata sabai data leko ho 
+    const allBlogs = await blogs.findAll()
+    console.log (allBlogs)
+
+    res.render('blogs',{blogs:allBlogs})
 })
 
+//createBlog
 app.get("/createBlog", (req,res)=>{
     res.render("createBlog")
 })
 
 app.post("/createBlog",async (req,res)=>{
-    //second approach
+    //second approach(destructure, optimize hunxa code)
     //const {title, subTitle, description} = req.body
 
     //first approach
@@ -39,11 +45,17 @@ app.post("/createBlog",async (req,res)=>{
         description : description
     })
 
-    res.send("form submitted successfully")
+    //res.send("form submitted successfully")
+    res.redirect('/')
 })
+
+//database/table bata data kasari nikalne 
 
 
 
 app.listen(3000, ()=>{
     console.log("Nodejs project has been started on port 3000")
 })
+
+// create = .create()
+//read = .findAll()
